@@ -1,0 +1,709 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DTP_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accident">
+          <Key>
+            <PropertyRef Name="AccidentID" />
+          </Key>
+          <Property Name="AccidentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="DateTime" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccidentVictim">
+          <Key>
+            <PropertyRef Name="AccidentVictimID" />
+          </Key>
+          <Property Name="AccidentVictimID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccidentID" Type="int" Nullable="false" />
+          <Property Name="VictimID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="CarID" />
+          </Key>
+          <Property Name="CarID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarModelID" Type="int" Nullable="false" />
+          <Property Name="Number" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="Region" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarModel">
+          <Key>
+            <PropertyRef Name="CarModelID" />
+          </Key>
+          <Property Name="CarModelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Manufacturer" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModelName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CategoryLicense">
+          <Key>
+            <PropertyRef Name="CategoryLicenseID" />
+          </Key>
+          <Property Name="CategoryLicenseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="DrivingLicenseID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DrivingLicense">
+          <Key>
+            <PropertyRef Name="DrivingLicenseID" />
+          </Key>
+          <Property Name="DrivingLicenseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DrivingLicenseNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="DateOfAcquisition" Type="date" Nullable="false" />
+          <Property Name="DateOfExpiration" Type="date" Nullable="false" />
+          <Property Name="GIBDDCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="100" />
+          <Property Name="PlaceOfResidence" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="RegionID" />
+          </Key>
+          <Property Name="RegionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegionNumber" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="RegionName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserNickname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserRole" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Victim">
+          <Key>
+            <PropertyRef Name="VictimID" />
+          </Key>
+          <Property Name="VictimID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="PassportNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="DrivingLicenseID" Type="int" Nullable="false" />
+          <Property Name="CarID" Type="int" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AccidentID">
+          <End Role="Accident" Type="Self.Accident" Multiplicity="1" />
+          <End Role="AccidentVictim" Type="Self.AccidentVictim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accident">
+              <PropertyRef Name="AccidentID" />
+            </Principal>
+            <Dependent Role="AccidentVictim">
+              <PropertyRef Name="AccidentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarID">
+          <End Role="Car" Type="Self.Car" Multiplicity="0..1" />
+          <End Role="Victim" Type="Self.Victim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="CarID" />
+            </Principal>
+            <Dependent Role="Victim">
+              <PropertyRef Name="CarID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarModelID">
+          <End Role="CarModel" Type="Self.CarModel" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarModel">
+              <PropertyRef Name="CarModelID" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="CarModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="CategoryLicense" Type="Self.CategoryLicense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="CategoryLicense">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DrivingLicenseID">
+          <End Role="DrivingLicense" Type="Self.DrivingLicense" Multiplicity="1" />
+          <End Role="CategoryLicense" Type="Self.CategoryLicense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DrivingLicense">
+              <PropertyRef Name="DrivingLicenseID" />
+            </Principal>
+            <Dependent Role="CategoryLicense">
+              <PropertyRef Name="DrivingLicenseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegionID">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionID" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="Region" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoleID">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VictimDrivingLicenseID">
+          <End Role="DrivingLicense" Type="Self.DrivingLicense" Multiplicity="1" />
+          <End Role="Victim" Type="Self.Victim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DrivingLicense">
+              <PropertyRef Name="DrivingLicenseID" />
+            </Principal>
+            <Dependent Role="Victim">
+              <PropertyRef Name="DrivingLicenseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VictimID">
+          <End Role="Victim" Type="Self.Victim" Multiplicity="1" />
+          <End Role="AccidentVictim" Type="Self.AccidentVictim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Victim">
+              <PropertyRef Name="VictimID" />
+            </Principal>
+            <Dependent Role="AccidentVictim">
+              <PropertyRef Name="VictimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DTP_ModelStoreContainer">
+          <EntitySet Name="Accident" EntityType="Self.Accident" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccidentVictim" EntityType="Self.AccidentVictim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Car" EntityType="Self.Car" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarModel" EntityType="Self.CarModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoryLicense" EntityType="Self.CategoryLicense" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DrivingLicense" EntityType="Self.DrivingLicense" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Victim" EntityType="Self.Victim" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AccidentID" Association="Self.FK_AccidentID">
+            <End Role="Accident" EntitySet="Accident" />
+            <End Role="AccidentVictim" EntitySet="AccidentVictim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarID" Association="Self.FK_CarID">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Victim" EntitySet="Victim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarModelID" Association="Self.FK_CarModelID">
+            <End Role="CarModel" EntitySet="CarModel" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category" Association="Self.FK_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="CategoryLicense" EntitySet="CategoryLicense" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DrivingLicenseID" Association="Self.FK_DrivingLicenseID">
+            <End Role="DrivingLicense" EntitySet="DrivingLicense" />
+            <End Role="CategoryLicense" EntitySet="CategoryLicense" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegionID" Association="Self.FK_RegionID">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoleID" Association="Self.FK_UserRoleID">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VictimDrivingLicenseID" Association="Self.FK_VictimDrivingLicenseID">
+            <End Role="DrivingLicense" EntitySet="DrivingLicense" />
+            <End Role="Victim" EntitySet="Victim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VictimID" Association="Self.FK_VictimID">
+            <End Role="Victim" EntitySet="Victim" />
+            <End Role="AccidentVictim" EntitySet="AccidentVictim" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DTP_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Accident">
+          <Key>
+            <PropertyRef Name="AccidentID" />
+          </Key>
+          <Property Name="AccidentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="AccidentVictim" Relationship="Self.FK_AccidentID" FromRole="Accident" ToRole="AccidentVictim" />
+        </EntityType>
+        <EntityType Name="AccidentVictim">
+          <Key>
+            <PropertyRef Name="AccidentVictimID" />
+          </Key>
+          <Property Name="AccidentVictimID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccidentID" Type="Int32" Nullable="false" />
+          <Property Name="VictimID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Accident" Relationship="Self.FK_AccidentID" FromRole="AccidentVictim" ToRole="Accident" />
+          <NavigationProperty Name="Victim" Relationship="Self.FK_VictimID" FromRole="AccidentVictim" ToRole="Victim" />
+        </EntityType>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="CarID" />
+          </Key>
+          <Property Name="CarID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarModelID" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Region" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Victim" Relationship="Self.FK_CarID" FromRole="Car" ToRole="Victim" />
+          <NavigationProperty Name="CarModel" Relationship="Self.FK_CarModelID" FromRole="Car" ToRole="CarModel" />
+          <NavigationProperty Name="Region1" Relationship="Self.FK_RegionID" FromRole="Car" ToRole="Region" />
+        </EntityType>
+        <EntityType Name="CarModel">
+          <Key>
+            <PropertyRef Name="CarModelID" />
+          </Key>
+          <Property Name="CarModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModelName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Car" Relationship="Self.FK_CarModelID" FromRole="CarModel" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CategoryLicense" Relationship="Self.FK_Category" FromRole="Category" ToRole="CategoryLicense" />
+        </EntityType>
+        <EntityType Name="CategoryLicense">
+          <Key>
+            <PropertyRef Name="CategoryLicenseID" />
+          </Key>
+          <Property Name="CategoryLicenseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="DrivingLicenseID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Category" FromRole="CategoryLicense" ToRole="Category" />
+          <NavigationProperty Name="DrivingLicense" Relationship="Self.FK_DrivingLicenseID" FromRole="CategoryLicense" ToRole="DrivingLicense" />
+        </EntityType>
+        <EntityType Name="DrivingLicense">
+          <Key>
+            <PropertyRef Name="DrivingLicenseID" />
+          </Key>
+          <Property Name="DrivingLicenseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DrivingLicenseNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateOfAcquisition" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateOfExpiration" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="GIBDDCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Photo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PlaceOfResidence" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CategoryLicense" Relationship="Self.FK_DrivingLicenseID" FromRole="DrivingLicense" ToRole="CategoryLicense" />
+          <NavigationProperty Name="Victim" Relationship="Self.FK_VictimDrivingLicenseID" FromRole="DrivingLicense" ToRole="Victim" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="RegionID" />
+          </Key>
+          <Property Name="RegionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegionNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RegionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Car" Relationship="Self.FK_RegionID" FromRole="Region" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserRoleID" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserNickname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserRole" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_UserRoleID" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Victim">
+          <Key>
+            <PropertyRef Name="VictimID" />
+          </Key>
+          <Property Name="VictimID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PassportNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DrivingLicenseID" Type="Int32" Nullable="false" />
+          <Property Name="CarID" Type="Int32" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="AccidentVictim" Relationship="Self.FK_VictimID" FromRole="Victim" ToRole="AccidentVictim" />
+          <NavigationProperty Name="Car" Relationship="Self.FK_CarID" FromRole="Victim" ToRole="Car" />
+          <NavigationProperty Name="DrivingLicense" Relationship="Self.FK_VictimDrivingLicenseID" FromRole="Victim" ToRole="DrivingLicense" />
+        </EntityType>
+        <Association Name="FK_AccidentID">
+          <End Role="Accident" Type="Self.Accident" Multiplicity="1" />
+          <End Role="AccidentVictim" Type="Self.AccidentVictim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accident">
+              <PropertyRef Name="AccidentID" />
+            </Principal>
+            <Dependent Role="AccidentVictim">
+              <PropertyRef Name="AccidentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VictimID">
+          <End Role="Victim" Type="Self.Victim" Multiplicity="1" />
+          <End Role="AccidentVictim" Type="Self.AccidentVictim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Victim">
+              <PropertyRef Name="VictimID" />
+            </Principal>
+            <Dependent Role="AccidentVictim">
+              <PropertyRef Name="VictimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarID">
+          <End Role="Car" Type="Self.Car" Multiplicity="0..1" />
+          <End Role="Victim" Type="Self.Victim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="CarID" />
+            </Principal>
+            <Dependent Role="Victim">
+              <PropertyRef Name="CarID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarModelID">
+          <End Role="CarModel" Type="Self.CarModel" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarModel">
+              <PropertyRef Name="CarModelID" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="CarModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegionID">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionID" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="Region" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="CategoryLicense" Type="Self.CategoryLicense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="CategoryLicense">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DrivingLicenseID">
+          <End Role="DrivingLicense" Type="Self.DrivingLicense" Multiplicity="1" />
+          <End Role="CategoryLicense" Type="Self.CategoryLicense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DrivingLicense">
+              <PropertyRef Name="DrivingLicenseID" />
+            </Principal>
+            <Dependent Role="CategoryLicense">
+              <PropertyRef Name="DrivingLicenseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VictimDrivingLicenseID">
+          <End Role="DrivingLicense" Type="Self.DrivingLicense" Multiplicity="1" />
+          <End Role="Victim" Type="Self.Victim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DrivingLicense">
+              <PropertyRef Name="DrivingLicenseID" />
+            </Principal>
+            <Dependent Role="Victim">
+              <PropertyRef Name="DrivingLicenseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoleID">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DTP_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accident" EntityType="Self.Accident" />
+          <EntitySet Name="AccidentVictim" EntityType="Self.AccidentVictim" />
+          <EntitySet Name="Car" EntityType="Self.Car" />
+          <EntitySet Name="CarModel" EntityType="Self.CarModel" />
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="CategoryLicense" EntityType="Self.CategoryLicense" />
+          <EntitySet Name="DrivingLicense" EntityType="Self.DrivingLicense" />
+          <EntitySet Name="Region" EntityType="Self.Region" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="Victim" EntityType="Self.Victim" />
+          <AssociationSet Name="FK_AccidentID" Association="Self.FK_AccidentID">
+            <End Role="Accident" EntitySet="Accident" />
+            <End Role="AccidentVictim" EntitySet="AccidentVictim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VictimID" Association="Self.FK_VictimID">
+            <End Role="Victim" EntitySet="Victim" />
+            <End Role="AccidentVictim" EntitySet="AccidentVictim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarID" Association="Self.FK_CarID">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Victim" EntitySet="Victim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarModelID" Association="Self.FK_CarModelID">
+            <End Role="CarModel" EntitySet="CarModel" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegionID" Association="Self.FK_RegionID">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category" Association="Self.FK_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="CategoryLicense" EntitySet="CategoryLicense" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DrivingLicenseID" Association="Self.FK_DrivingLicenseID">
+            <End Role="DrivingLicense" EntitySet="DrivingLicense" />
+            <End Role="CategoryLicense" EntitySet="CategoryLicense" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VictimDrivingLicenseID" Association="Self.FK_VictimDrivingLicenseID">
+            <End Role="DrivingLicense" EntitySet="DrivingLicense" />
+            <End Role="Victim" EntitySet="Victim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoleID" Association="Self.FK_UserRoleID">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DTP_ModelStoreContainer" CdmEntityContainer="DTP_Entities">
+          <EntitySetMapping Name="Accident">
+            <EntityTypeMapping TypeName="DTP_Model.Accident">
+              <MappingFragment StoreEntitySet="Accident">
+                <ScalarProperty Name="AccidentID" ColumnName="AccidentID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccidentVictim">
+            <EntityTypeMapping TypeName="DTP_Model.AccidentVictim">
+              <MappingFragment StoreEntitySet="AccidentVictim">
+                <ScalarProperty Name="AccidentVictimID" ColumnName="AccidentVictimID" />
+                <ScalarProperty Name="AccidentID" ColumnName="AccidentID" />
+                <ScalarProperty Name="VictimID" ColumnName="VictimID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Car">
+            <EntityTypeMapping TypeName="DTP_Model.Car">
+              <MappingFragment StoreEntitySet="Car">
+                <ScalarProperty Name="CarID" ColumnName="CarID" />
+                <ScalarProperty Name="CarModelID" ColumnName="CarModelID" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarModel">
+            <EntityTypeMapping TypeName="DTP_Model.CarModel">
+              <MappingFragment StoreEntitySet="CarModel">
+                <ScalarProperty Name="CarModelID" ColumnName="CarModelID" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="DTP_Model.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoryLicense">
+            <EntityTypeMapping TypeName="DTP_Model.CategoryLicense">
+              <MappingFragment StoreEntitySet="CategoryLicense">
+                <ScalarProperty Name="CategoryLicenseID" ColumnName="CategoryLicenseID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="DrivingLicenseID" ColumnName="DrivingLicenseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DrivingLicense">
+            <EntityTypeMapping TypeName="DTP_Model.DrivingLicense">
+              <MappingFragment StoreEntitySet="DrivingLicense">
+                <ScalarProperty Name="DrivingLicenseID" ColumnName="DrivingLicenseID" />
+                <ScalarProperty Name="DrivingLicenseNumber" ColumnName="DrivingLicenseNumber" />
+                <ScalarProperty Name="DateOfAcquisition" ColumnName="DateOfAcquisition" />
+                <ScalarProperty Name="DateOfExpiration" ColumnName="DateOfExpiration" />
+                <ScalarProperty Name="GIBDDCode" ColumnName="GIBDDCode" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="PlaceOfResidence" ColumnName="PlaceOfResidence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Region">
+            <EntityTypeMapping TypeName="DTP_Model.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+                <ScalarProperty Name="RegionNumber" ColumnName="RegionNumber" />
+                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="DTP_Model.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DTP_Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="DTP_Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserNickname" ColumnName="UserNickname" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Victim">
+            <EntityTypeMapping TypeName="DTP_Model.Victim">
+              <MappingFragment StoreEntitySet="Victim">
+                <ScalarProperty Name="VictimID" ColumnName="VictimID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="PassportNumber" ColumnName="PassportNumber" />
+                <ScalarProperty Name="DrivingLicenseID" ColumnName="DrivingLicenseID" />
+                <ScalarProperty Name="CarID" ColumnName="CarID" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
